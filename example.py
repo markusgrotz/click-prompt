@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
-import click
+
+from typing import Sequence
+
+import rich_click as click
 
 from click_prompt import ChoiceOption
 from click_prompt import MultipleOption
@@ -8,54 +11,48 @@ from click_prompt import ConfirmOption
 from click_prompt import FilePathOption
 from click_prompt import AutoCompleteOption
 
-
-from typing import Sequence
-
-
 FRUITS = [ 'Apples', 'Bananas', 'Grapefruits', 'Mangoes', 'Oranges', 'Pears',
            'Peaches', 'Raspberries', 'Strawberries', 'Watermelons' ]
 
 @click.group()
-def cli():
+def cli(**kwargs):
     pass
 
 
-@cli.command
+@cli.command()
 @click.option('--choice', prompt='What do you want to eat?', type=click.Choice(FRUITS), cls=ChoiceOption)
 def single(choice: str):
     print(choice)
 
-@cli.command
+@cli.command()
 @click.option('--options', prompt='Select smoothie ingredients', type=click.Choice(FRUITS), cls=MultipleOption)
 def multiple(options: Sequence[str]):
     print(options)
 
-@cli.command
+@cli.command()
 @click.option('--confirm', prompt='Do you really want to ?', cls=ConfirmOption)
 def confirm(confirm: bool):
     print(confirm)
 
-@cli.command
+@cli.command()
 @click.option('--confirm', prompt='Confirm', is_flag=True)
 def confirm_click(confirm: bool):
     print(confirm)
 
-@cli.command
+@cli.command()
 @click.option('--path', cls=FilePathOption)
 def file(path: str):
     print(path)
 
-@cli.command
+@cli.command()
 @click.option('--complete', type=click.Choice(FRUITS), cls=AutoCompleteOption)
 def auto_choice(complete: str):
     print(complete)
 
-@cli.command
+@cli.command()
 @click.option('--complete', prompt='What is your favourite fruit?', choices=FRUITS, cls=AutoCompleteOption)
 def auto(complete: str):
     print(complete)
-
-
 
 
 if __name__ == '__main__':

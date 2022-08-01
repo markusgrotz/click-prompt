@@ -1,5 +1,7 @@
-import click
-import questionary
+"""
+Provides additional interactive command line interface options for the
+click framework using the questionary library
+"""
 
 from typing import Any
 from typing import Optional
@@ -7,23 +9,23 @@ from typing import Union
 from typing import List
 from typing import Sequence
 
+import click
+import questionary
 
 
-class QuestionaryOption(click.Option):
+class ChoiceOption(click.Option):
     """
-    Allows the user to interactively select a single item given a sequence of choices 
+    Allows the user to interactively select a single item given a sequence of
+    choices. Code adapted from Stackoverflow [1].
 
-    ..see:: https://stackoverflow.com/questions/54311067/using-a-numeric-identifier-for-value-selection-in-click-choice
-
-    ..see:: click.Option
+    [1] https://stackoverflow.com/questions/54311067/
     """
-    def __init__(self,  
-            param_decls: Optional[Sequence[str]] = None,
-            prompt: Union[bool, str] = True,
-            **kwargs):
 
+    def __init__(self,
+                 param_decls: Optional[Sequence[str]] = None,
+                 prompt: Union[bool, str] = True,
+                 **kwargs):
         click.Option.__init__(self, param_decls, prompt=prompt, multiple=False, **kwargs)
-
         if not isinstance(self.type, click.Choice):
             raise Exception('ChoiceOption type arg must be click.Choice')
 
@@ -34,19 +36,20 @@ class QuestionaryOption(click.Option):
 
 
 
-
 class MultipleOption(click.Option):
     """
-    Allows the user to interactively select multiple items given a sequence of choices 
+    Allows the user to interactively select multiple items from a list given a
+    sequence of choices. Interactive selection is skipped if the list only
+    contains a single item.
     """
 
-    def __init__(self,  
-            param_decls: Optional[Sequence[str]] = None,
-            prompt: Union[bool, str] = True,
-            **kwargs):
+    def __init__(self,
+                 param_decls: Optional[Sequence[str]] = None,
+                 prompt: Union[bool, str] = True,
+                 **kwargs):
         click.Option.__init__(self, param_decls, prompt=prompt, multiple=True, **kwargs)
         if not isinstance(self.type, click.Choice):
-            raise Exception('ChoiceOption type arg must be click.Choice')
+            raise Exception('MultipleOption type arg must be click.Choice')
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         if len(self.type.choices) == 1:
@@ -56,13 +59,14 @@ class MultipleOption(click.Option):
 
 class ConfirmOption(click.Option):
     """
-    Allows the user to confirm an option. Can be also implemented using click onboard features.
+    Allows the user to confirm an option. Can be also implemented using click
+    onboard features.
     """
- 
-    def __init__(self,  
-            param_decls: Optional[Sequence[str]] = None,
-            prompt: Union[bool, str] = True,
-            **kwargs):
+
+    def __init__(self,
+                 param_decls: Optional[Sequence[str]] = None,
+                 prompt: Union[bool, str] = True,
+                 **kwargs):
         click.Option.__init__(self, param_decls, prompt=prompt, is_flag=True, **kwargs)
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
@@ -71,29 +75,30 @@ class ConfirmOption(click.Option):
 
 class FilePathOption(click.Option):
     """
-    Allows the user to sepcify a path
+    Allows the user to sepcify a path.
     """
- 
-    def __init__(self,  
-            param_decls: Optional[Sequence[str]] = None,
-            prompt: Union[bool, str] = True,
-            **kwargs):
+
+    def __init__(self,
+                 param_decls: Optional[Sequence[str]] = None,
+                 prompt: Union[bool, str] = True,
+                 **kwargs):
         click.Option.__init__(self, param_decls, prompt=prompt, **kwargs)
         self.default = self.default or '~'
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.path(self.prompt, default=self.default).unsafe_ask()
 
+
 class AutoCompleteOption(click.Option):
     """
-    Auto complete uer input
+    Auto complete user input.
     """
- 
-    def __init__(self,  
-            param_decls: Optional[Sequence[str]] = None,
-            prompt: Union[bool, str] = True,
-            choices=None,
-            **kwargs):
+
+    def __init__(self,
+                 param_decls: Optional[Sequence[str]] = None,
+                 prompt: Union[bool, str] = True,
+                 choices=None,
+                 **kwargs):
         click.Option.__init__(self, param_decls, prompt=prompt, **kwargs)
         if isinstance(self.type, click.Choice):
             self.choices = self.type.choices
@@ -102,5 +107,4 @@ class AutoCompleteOption(click.Option):
         self.default = self.default or ''
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
-        return questionary.autocomplete(self.prompt, choices=self.choices, default=self.default).unsafe_ask()
-
+        return questionary.autocomplete(self.prompt, self.choices, self.default).unsafe_ask()
