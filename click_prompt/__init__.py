@@ -8,7 +8,15 @@ from typing import List
 from typing import Sequence
 
 
-class ChoiceOption(click.Option):
+
+class QuestionaryOption(click.Option):
+    """
+    Allows the user to interactively select a single item given a sequence of choices 
+
+    ..see:: https://stackoverflow.com/questions/54311067/using-a-numeric-identifier-for-value-selection-in-click-choice
+
+    ..see:: click.Option
+    """
     def __init__(self,  
             param_decls: Optional[Sequence[str]] = None,
             prompt: Union[bool, str] = True,
@@ -28,6 +36,9 @@ class ChoiceOption(click.Option):
 
 
 class MultipleOption(click.Option):
+    """
+    Allows the user to interactively select multiple items given a sequence of choices 
+    """
 
     def __init__(self,  
             param_decls: Optional[Sequence[str]] = None,
@@ -44,6 +55,9 @@ class MultipleOption(click.Option):
 
 
 class ConfirmOption(click.Option):
+    """
+    Allows the user to confirm an option. Can be also implemented using click onboard features.
+    """
  
     def __init__(self,  
             param_decls: Optional[Sequence[str]] = None,
@@ -56,6 +70,9 @@ class ConfirmOption(click.Option):
 
 
 class FilePathOption(click.Option):
+    """
+    Allows the user to sepcify a path
+    """
  
     def __init__(self,  
             param_decls: Optional[Sequence[str]] = None,
@@ -68,6 +85,9 @@ class FilePathOption(click.Option):
         return questionary.path(self.prompt, default=self.default).unsafe_ask()
 
 class AutoCompleteOption(click.Option):
+    """
+    Auto complete uer input
+    """
  
     def __init__(self,  
             param_decls: Optional[Sequence[str]] = None,
