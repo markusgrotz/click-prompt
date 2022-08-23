@@ -1,6 +1,6 @@
 # click-prompt
 
-[![Supported Python Versions](https://img.shields.io/pypi/pyversions/click-pprompt/0.0.1)](https://pypi.org/project/click-prompt/) 
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/click-prompt/0.0.1)](https://pypi.org/project/click-prompt/) 
 [![PyPI version](https://badge.fury.io/py/click-prompt.svg)](https://badge.fury.io/py/click-prompt)
 
 

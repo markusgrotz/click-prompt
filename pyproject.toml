@@ -3,6 +3,7 @@ name = "click-prompt"
 version = "0.1.0"
 description = ""
 authors = ["Markus Grotz <grotz@uw.edu>"]
+license = "BSD-3-Clause"
 
 [tool.poetry.dependencies]
 python = ">=3.6.9,<4.0"
