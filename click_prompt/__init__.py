@@ -10,12 +10,53 @@ from typing import List
 from typing import Sequence
 
 from abc import ABC
+from abc import abstractmethod
 
 import click
 import questionary
 
+from typing import Any
+from typing import Mapping
+from typing import Tuple
+from click.core import ParameterSource
+from click.core import Context
 
-class ChoiceParameter(click.Parameter, ABC):
+
+class PromptParameter(click.Parameter, ABC):
+
+    prompt: Union[bool, str]
+
+    @abstractmethod
+    def prompt_for_value(self, ctx: Context):
+        pass
+
+
+class PromptArgument(click.Argument, PromptParameter):
+    def __init__(
+        self,
+        param_decls: Optional[Sequence[str]] = None,
+        prompt: Union[bool, str] = True,
+        multiple: bool = False,
+        **kwargs
+    ):
+        self.prompt = prompt
+        super().__init__(param_decls, **kwargs)
+
+    def consume_value(
+        self, ctx: Context, opts: Mapping[str, Any]
+    ) -> Tuple[Any, ParameterSource]:
+
+        value = opts.get(self.name)  # type: ignore
+        source = ParameterSource.COMMANDLINE
+
+        if value is None:
+            value = self.prompt_for_value(ctx)
+            source = ParameterSource.PROMPT
+
+        return value, source
+
+
+class ChoiceParameter(PromptParameter, ABC):
     """
     Allows the user to interactively select a single item given a sequence of
     choices. Code adapted from Stackoverflow [1].
@@ -31,6 +72,7 @@ class ChoiceParameter(click.Parameter, ABC):
     ):
         super().__init__(param_decls, prompt=prompt, multiple=False, **kwargs)
         if not isinstance(self.type, click.Choice):
+            print(self.type)
             raise Exception("ChoiceOption type arg must be click.Choice")
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
@@ -43,11 +85,11 @@ class ChoiceOption(ChoiceParameter, click.Option):
     pass
 
 
-class ChoiceArgument(ChoiceParameter, click.Argument):
+class ChoiceArgument(ChoiceParameter, PromptArgument):
     pass
 
 
-class MultipleParameter(click.Parameter, ABC):
+class MultipleParameter(PromptParameter, ABC):
     """
     Allows the user to interactively select multiple items from a list given a
     sequence of choices. Interactive selection is skipped if the list only
@@ -74,11 +116,11 @@ class MultipleOption(MultipleParameter, click.Option):
     pass
 
 
-class MultipleArgument(MultipleParameter, click.Argument):
+class MultipleArgument(MultipleParameter, PromptArgument):
     pass
 
 
-class ConfirmParameter(click.Parameter, ABC):
+class ConfirmParameter(PromptParameter, ABC):
     """
     Allows the user to confirm an option. Can be also implemented using click
     onboard features.
@@ -100,11 +142,11 @@ class ConfirmOption(ConfirmParameter, click.Option):
     pass
 
 
-class ConfirmArgument(ConfirmParameter, click.Argument):
+class ConfirmArgument(ConfirmParameter, PromptArgument):
     pass
 
 
-class FilePathParameter(click.Parameter, ABC):
+class FilePathParameter(PromptParameter, ABC):
     """
     Allows the user to sepcify a path.
     """
@@ -126,11 +168,11 @@ class FilePathOption(FilePathParameter, click.Option):
     pass
 
 
-class FilePathArgument(FilePathParameter, click.Argument):
+class FilePathArgument(FilePathParameter, PromptArgument):
     pass
 
 
-class AutoCompleteParameter(click.Parameter, ABC):
+class AutoCompleteParameter(PromptParameter, ABC):
     """
     Auto complete user input.
     """
@@ -159,5 +201,5 @@ class AutoCompleteOption(AutoCompleteParameter, click.Option):
     pass
 
 
-class AutoCompleteArgument(AutoCompleteParameter, click.Argument):
+class AutoCompleteArgument(AutoCompleteParameter, PromptArgument):
     pass

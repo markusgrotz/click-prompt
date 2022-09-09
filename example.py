@@ -89,5 +89,14 @@ def auto(complete: str):
     print(complete)
 
 
+from click_prompt import ChoiceArgument
+
+
+@cli.command()
+@click.argument("fruit", type=click.Choice(FRUITS), cls=ChoiceArgument)
+def argument(fruit: str):
+    print(fruit)
+
+
 if __name__ == "__main__":
     cli()
