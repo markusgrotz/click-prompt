@@ -3,7 +3,8 @@
 
 from typing import Sequence
 
-import rich_click as click
+import click
+#import rich_click as click
 
 from click_prompt import ChoiceOption
 from click_prompt import MultipleOption
