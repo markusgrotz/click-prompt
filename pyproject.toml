@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "click-prompt"
-version = "0.2.0"
+version = "0.2.1"
 description = "click-prompt provides more beautiful interactive options for the Python click library"
 readme = "README.md"
 authors = ["Markus Grotz <grotz@uw.edu>"]
@@ -33,6 +33,3 @@ include = '\.pyi?$'
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-
-
