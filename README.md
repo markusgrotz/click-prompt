@@ -7,6 +7,11 @@
 click-prompt provides more beautiful interactive options for the Python click
 library. The library is inspired by a post on [stackoverflow.com](https://stackoverflow.com/questions/54311067/)
 
+
+
+![Example](docs/exmaple.gif)
+
+
 ## Usage
 
 ```python
@@ -22,6 +27,8 @@ from click_prompt import ChoiceOption
 def select_fruit(fruit: str):
     print(choice)
 ```
+
+
 
 
 ## Available Parameters
