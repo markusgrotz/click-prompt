@@ -1,4 +1,4 @@
-# click-prompt
+# click-prompt 
 
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/click-prompt)](https://pypi.org/project/click-prompt/) 
 [![PyPI version](https://img.shields.io/pypi/v/click-prompt)](https://pypi.org/project/click-prompt/) 
@@ -6,10 +6,6 @@
 
 click-prompt provides more beautiful interactive options for the Python click
 library. The library is inspired by a post on [stackoverflow.com](https://stackoverflow.com/questions/54311067/)
-
-
-
-![Example](./docs/example.gif)
 
 
 ## Usage
@@ -28,7 +24,9 @@ def select_fruit(fruit: str):
     print(choice)
 ```
 
+## Example
 
+![Example](./docs/example_cli.gif)
 
 
 ## Available Parameters
