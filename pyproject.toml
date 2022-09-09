@@ -2,8 +2,22 @@
 name = "click-prompt"
 version = "0.2.0"
 description = "click-prompt provides more beautiful interactive options for the Python click library"
+readme = "README.md"
 authors = ["Markus Grotz <grotz@uw.edu>"]
 license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+homepage = "https://github.com/markusgrotz/click-prompt"
+documentation = "https://github.com/markusgrotz/click-prompt"
+source = "https://github.com/markusgrotz/click-prompt"
+download = "https://github.com/markusgrotz/click-prompt"
+tracker = "https://github.com/markusgrotz/click-prompt/issues"
+
 
 [tool.poetry.dependencies]
 python = ">=3.6.9,<4.0"
