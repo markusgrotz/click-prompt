@@ -9,11 +9,13 @@ from typing import Union
 from typing import List
 from typing import Sequence
 
+from abc import ABC
+
 import click
 import questionary
 
 
-class ChoiceOption(click.Option):
+class ChoiceParameter(click.Parameter, ABC):
     """
     Allows the user to interactively select a single item given a sequence of
     choices. Code adapted from Stackoverflow [1].
@@ -25,7 +27,7 @@ class ChoiceOption(click.Option):
                  param_decls: Optional[Sequence[str]] = None,
                  prompt: Union[bool, str] = True,
                  **kwargs):
-        click.Option.__init__(self, param_decls, prompt=prompt, multiple=False, **kwargs)
+        super().__init__(param_decls, prompt=prompt, multiple=False, **kwargs)
         if not isinstance(self.type, click.Choice):
             raise Exception('ChoiceOption type arg must be click.Choice')
 
@@ -34,9 +36,13 @@ class ChoiceOption(click.Option):
             return self.type.choices[0]
         return questionary.select(self.prompt, choices=self.type.choices).unsafe_ask()
 
+class ChoiceOption(ChoiceParameter, click.Option):
+    pass
 
+class ChoiceArgument(ChoiceParameter, click.Argument):
+    pass
 
-class MultipleOption(click.Option):
+class MultipleParameter(click.Parameter, ABC):
     """
     Allows the user to interactively select multiple items from a list given a
     sequence of choices. Interactive selection is skipped if the list only
@@ -47,7 +53,7 @@ class MultipleOption(click.Option):
                  param_decls: Optional[Sequence[str]] = None,
                  prompt: Union[bool, str] = True,
                  **kwargs):
-        click.Option.__init__(self, param_decls, prompt=prompt, multiple=True, **kwargs)
+        super().__init__(param_decls, prompt=prompt, multiple=True, **kwargs)
         if not isinstance(self.type, click.Choice):
             raise Exception('MultipleOption type arg must be click.Choice')
 
@@ -56,8 +62,13 @@ class MultipleOption(click.Option):
             return [self.type.choices[0]]
         return questionary.checkbox(self.prompt, choices=self.type.choices).unsafe_ask()
 
+class MultipleOption(MultipleParameter, click.Option):
+    pass
 
-class ConfirmOption(click.Option):
+class MultipleArgument(MultipleParameter, click.Argument):
+    pass
+
+class ConfirmParameter(click.Parameter, ABC):
     """
     Allows the user to confirm an option. Can be also implemented using click
     onboard features.
@@ -67,13 +78,18 @@ class ConfirmOption(click.Option):
                  param_decls: Optional[Sequence[str]] = None,
                  prompt: Union[bool, str] = True,
                  **kwargs):
-        click.Option.__init__(self, param_decls, prompt=prompt, is_flag=True, **kwargs)
+        super().__init__(param_decls, prompt=prompt, is_flag=True, **kwargs)
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.confirm(self.prompt, default=self.default).unsafe_ask()
 
+class ConfirmOption(ConfirmParameter, click.Option):
+    pass
 
-class FilePathOption(click.Option):
+class ConfirmArgument(ConfirmParameter, click.Argument):
+    pass
+
+class FilePathParameter(click.Parameter, ABC):
     """
     Allows the user to sepcify a path.
     """
@@ -82,14 +98,19 @@ class FilePathOption(click.Option):
                  param_decls: Optional[Sequence[str]] = None,
                  prompt: Union[bool, str] = True,
                  **kwargs):
-        click.Option.__init__(self, param_decls, prompt=prompt, **kwargs)
+        super().__init__(param_decls, prompt=prompt, **kwargs)
         self.default = self.default or '~'
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.path(self.prompt, default=self.default).unsafe_ask()
 
+class FilePathOption(FilePathParameter, click.Option):
+    pass
 
-class AutoCompleteOption(click.Option):
+class FilePathArgument(FilePathParameter, click.Argument):
+    pass
+
+class AutoCompleteParameter(click.Parameter, ABC):
     """
     Auto complete user input.
     """
@@ -99,7 +120,7 @@ class AutoCompleteOption(click.Option):
                  prompt: Union[bool, str] = True,
                  choices=None,
                  **kwargs):
-        click.Option.__init__(self, param_decls, prompt=prompt, **kwargs)
+        super().__init__(param_decls, prompt=prompt, **kwargs)
         if isinstance(self.type, click.Choice):
             self.choices = self.type.choices
         else:
@@ -108,3 +129,9 @@ class AutoCompleteOption(click.Option):
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.autocomplete(self.prompt, self.choices, self.default).unsafe_ask()
+
+class AutoCompleteOption(AutoCompleteParameter, click.Option):
+    pass
+
+class AutoCompleteArgument(AutoCompleteParameter, click.Argument):
+    pass
