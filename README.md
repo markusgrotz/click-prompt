@@ -9,7 +9,7 @@ library. The library is inspired by a post on [stackoverflow.com](https://stacko
 
 
 
-![Example](docs/exmaple.gif)
+![Example](./docs/example.gif)
 
 
 ## Usage
