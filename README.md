@@ -5,8 +5,7 @@
 
 
 click-prompt provides more beautiful interactive options for the Python click
-library.
-
+library. The library is inspired by a post on [stackoverflow.com](https://stackoverflow.com/questions/54311067/)
 
 ## Usage
 
@@ -25,10 +24,13 @@ def select_fruit(fruit: str):
 ```
 
 
-## Available Options
+## Available Parameters
+
+for every click.Option there is also a click.Argument  implementation
 
  - ChoiceOption: Select a single item out of a list
  - MultipleOption: Select multiple items out of a list
  - ConfirmOption: Yes/No confirmation
  - FilePathOption: Select a file path with auto completion
  - AutoCompleteOption: Auto completion given a list
+
