@@ -11,13 +11,11 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-[project.urls]
+[tool.poetry.urls]
 homepage = "https://github.com/markusgrotz/click-prompt"
+repository = "https://github.com/markusgrotz/click-prompt"
 documentation = "https://github.com/markusgrotz/click-prompt"
-source = "https://github.com/markusgrotz/click-prompt"
-download = "https://github.com/markusgrotz/click-prompt"
 tracker = "https://github.com/markusgrotz/click-prompt/issues"
-
 
 [tool.poetry.dependencies]
 python = ">=3.6.9,<4.0"
