@@ -1,7 +1,7 @@
 # click-prompt
 
-[![Supported Python Versions](https://img.shields.io/pypi/pyversions/click-prompt/)](https://pypi.org/project/click-prompt/) 
-[![PyPI version](https://badge.fury.io/py/click-prompt.svg)](https://badge.fury.io/py/click-prompt)
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/click-prompt)](https://pypi.org/project/click-prompt/) 
+[![PyPI version](https://img.shields.io/pypi/v/click-prompt)](https://pypi.org/project/click-prompt/) 
 
 
 click-prompt provides more beautiful interactive options for the Python click
