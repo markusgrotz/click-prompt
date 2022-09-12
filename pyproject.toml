@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "click-prompt"
-version = "0.3.1"
+version = "0.3.2"
 description = "click-prompt provides more beautiful interactive options for the Python click library"
 readme = "README.md"
 authors = ["Markus Grotz <grotz@uw.edu>"]
