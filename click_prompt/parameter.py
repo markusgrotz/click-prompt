@@ -15,7 +15,6 @@ from click.core import Context
 import questionary
 
 
-
 class PromptParameter(click.Parameter, ABC):
 
     prompt: Union[bool, str]
@@ -39,7 +38,7 @@ class ChoiceParameter(PromptParameter, ABC):
         self,
         param_decls: Optional[Sequence[str]] = None,
         prompt: Union[bool, str] = True,
-        multiple: bool=False,
+        multiple: bool = False,
         **kwargs
     ):
         super().__init__(param_decls, prompt=prompt, multiple=multiple, **kwargs)
@@ -51,9 +50,13 @@ class ChoiceParameter(PromptParameter, ABC):
         if len(self.type.choices) == 1:
             return self.type.choices[0]
         if self.multiple:
-            return questionary.checkbox(self.prompt, choices=self.type.choices).unsafe_ask()
+            return questionary.checkbox(
+                self.prompt, choices=self.type.choices
+            ).unsafe_ask()
         else:
-            return questionary.select(self.prompt, choices=self.type.choices).unsafe_ask()
+            return questionary.select(
+                self.prompt, choices=self.type.choices
+            ).unsafe_ask()
 
 
 class ConfirmParameter(PromptParameter, ABC):
@@ -72,7 +75,6 @@ class ConfirmParameter(PromptParameter, ABC):
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.confirm(self.prompt, default=self.default).unsafe_ask()
-
 
 
 class FilePathParameter(PromptParameter, ABC):

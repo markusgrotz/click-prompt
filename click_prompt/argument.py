@@ -40,14 +40,18 @@ class PromptArgument(click.Argument, PromptParameter):
 
         return value, source
 
+
 class ChoiceArgument(ChoiceParameter, PromptArgument):
     pass
+
 
 class ConfirmArgument(ConfirmParameter, PromptArgument):
     pass
 
+
 class FilePathArgument(FilePathParameter, PromptArgument):
     pass
+
 
 class AutoCompleteArgument(AutoCompleteParameter, PromptArgument):
     pass

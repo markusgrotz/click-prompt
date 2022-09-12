@@ -7,5 +7,3 @@ from click_prompt.option import *
 
 from click_prompt.argument_decorators import *
 from click_prompt.option_decorators import *
-
-

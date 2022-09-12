@@ -31,20 +31,23 @@ FRUITS = [
 def cli(**kwargs):
     pass
 
+
 @cli.command()
-@choice_option('--fruit', type=click.Choice(FRUITS),
-    prompt="What do you want to eat?")
+@choice_option("--fruit", type=click.Choice(FRUITS), prompt="What do you want to eat?")
 def single(fruit: str):
     print(fruit)
+
 
 @cli.command()
 @choice_option(
     "--fruit",
     prompt="Select smoothie ingredients",
     type=click.Choice(FRUITS),
-    multiple=True)
+    multiple=True,
+)
 def multiple(fruit: Sequence[str]):
     print(fruit)
+
 
 @cli.command()
 @confirm_option("--confirm", prompt="Do you really want to ?")
@@ -72,9 +75,8 @@ def auto_choice(complete: str):
 
 @cli.command()
 @auto_complete_option(
-    "--complete",
-    prompt="What is your favourite fruit?",
-    choices=FRUITS)
+    "--complete", prompt="What is your favourite fruit?", choices=FRUITS
+)
 def auto(complete: str):
     print(complete)
 
@@ -83,6 +85,7 @@ def auto(complete: str):
 @choice_argument("fruit", type=click.Choice(FRUITS))
 def argument(fruit: str):
     print(fruit)
+
 
 if __name__ == "__main__":
     cli()
