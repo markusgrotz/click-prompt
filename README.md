@@ -9,10 +9,7 @@ library. The library is inspired by a post on [stackoverflow.com](https://stacko
 
 ## Usage
 
-The library can be used in two ways: 1) as decorator, or 2) as type parameter.
-
-### With decorators
-
+The library can be used with decorators:
 
 ```python
 import click
@@ -20,20 +17,6 @@ from click_prompt import choice_option
 
 @click.command()
 @choice_option('--fruit', type=click.Choice(['Apples', 'Bananas', 'Grapefruits', 'Mangoes']))
-def select_fruit(fruit: str):
-    print(fruit)
-```
-
-### As class
-
-```python
-import click
-from click_prompt import ChoiceOption
-
-@click.command()
-@click.option('--fruit', 
-              type=click.Choice(['Apples', 'Bananas', 'Grapefruits', 'Mangoes']),
-              cls=ChoiceOption)
 def select_fruit(fruit: str):
     print(fruit)
 ```
