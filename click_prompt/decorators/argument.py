@@ -1,10 +1,10 @@
 from functools import wraps
 import click
 
-from click_prompt.argument import ChoiceArgument
-from click_prompt.argument import ConfirmArgument
-from click_prompt.argument import FilePathArgument
-from click_prompt.argument import AutoCompleteArgument
+from click_prompt.core.argument import ChoiceArgument
+from click_prompt.core.argument import ConfirmArgument
+from click_prompt.core.argument import FilePathArgument
+from click_prompt.core.argument import AutoCompleteArgument
 
 
 def choice_argument(*args, **kwargs):
