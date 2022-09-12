@@ -9,11 +9,11 @@ import click
 from click.core import ParameterSource
 from click.core import Context
 
-from click_prompt.prompt_parameter import PromptParameter
-from click_prompt.prompt_parameter import ChoiceParameter
-from click_prompt.prompt_parameter import ConfirmParameter
-from click_prompt.prompt_parameter import FilePathParameter
-from click_prompt.prompt_parameter import AutoCompleteParameter
+from click_prompt.parameter import PromptParameter
+from click_prompt.parameter import ChoiceParameter
+from click_prompt.parameter import ConfirmParameter
+from click_prompt.parameter import FilePathParameter
+from click_prompt.parameter import AutoCompleteParameter
 
 
 class PromptArgument(click.Argument, PromptParameter):

@@ -1,9 +1,9 @@
 import click
 
-from click_prompt.prompt_parameter import ChoiceParameter
-from click_prompt.prompt_parameter import ConfirmParameter
-from click_prompt.prompt_parameter import FilePathParameter
-from click_prompt.prompt_parameter import AutoCompleteParameter
+from click_prompt.parameter import ChoiceParameter
+from click_prompt.parameter import ConfirmParameter
+from click_prompt.parameter import FilePathParameter
+from click_prompt.parameter import AutoCompleteParameter
 
 
 class ChoiceOption(ChoiceParameter, click.Option):
