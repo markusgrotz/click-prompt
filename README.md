@@ -7,12 +7,26 @@
 click-prompt provides more beautiful interactive options for the Python click
 library. The library is inspired by a post on [stackoverflow.com](https://stackoverflow.com/questions/54311067/)
 
-
 ## Usage
 
+The library can be used in two ways: 1) as decorator, or 2) as type parameter.
+
+### With decorators
+
+
 ```python
+import click
+from click_prompt import choice_option
 
+@click.command()
+@choice_option('--fruit', type=click.Choice(['Apples', 'Bananas', 'Grapefruits', 'Mangoes']))
+def select_fruit(fruit: str):
+    print(fruit)
+```
 
+### As class
+
+```python
 import click
 from click_prompt import ChoiceOption
 
@@ -21,7 +35,7 @@ from click_prompt import ChoiceOption
               type=click.Choice(['Apples', 'Bananas', 'Grapefruits', 'Mangoes']),
               cls=ChoiceOption)
 def select_fruit(fruit: str):
-    print(choice)
+    print(fruit)
 ```
 
 ## Example
@@ -29,13 +43,15 @@ def select_fruit(fruit: str):
 ![Example](./docs/example_cli.gif)
 
 
-## Available Parameters
+## Available Decorators
 
-for every click.Option there is also a click.Argument  implementation
+Here is a list of available decorators that can be used with the click library
+instead of a `click.Option` decorator
 
- - ChoiceOption: Select a single item out of a list
- - MultipleOption: Select multiple items out of a list
- - ConfirmOption: Yes/No confirmation
- - FilePathOption: Select a file path with auto completion
- - AutoCompleteOption: Auto completion given a list
+ - `choice_option`: Select a single item out of a list. Use the parameter
+   `multiple=True` to select multiple items out of a list
+ - `confirm_option`: Yes/No confirmation
+ - `filepath_option`: Select a file path with auto completion
+ - `auto_complete_option`: Auto completion given a list
 
+for every `click.Option` there is also a `click.Argument` implementation

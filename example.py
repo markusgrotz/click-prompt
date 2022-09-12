@@ -7,10 +7,11 @@ import click
 
 # import rich_click as click
 
-from click_prompt import ChoiceOption
-from click_prompt import ConfirmOption
-from click_prompt import FilePathOption
-from click_prompt import AutoCompleteOption
+from click_prompt import choice_option
+from click_prompt import confirm_option
+from click_prompt import filepath_option
+from click_prompt import auto_complete_option
+from click_prompt import choice_argument
 
 FRUITS = [
     "Apples",
@@ -30,32 +31,23 @@ FRUITS = [
 def cli(**kwargs):
     pass
 
+@cli.command()
+@choice_option('--fruit', type=click.Choice(FRUITS),
+    prompt="What do you want to eat?")
+def single(fruit: str):
+    print(fruit)
 
 @cli.command()
-@click.option(
-    "--choice",
-    prompt="What do you want to eat?",
-    type=click.Choice(FRUITS),
-    cls=ChoiceOption,
-)
-def single(choice: str):
-    print(choice)
-
-
-@cli.command()
-@click.option(
-    "--options",
+@choice_option(
+    "--fruit",
     prompt="Select smoothie ingredients",
     type=click.Choice(FRUITS),
-    multiple=True,
-    cls=ChoiceOption,
-)
-def multiple(options: Sequence[str]):
-    print(options)
-
+    multiple=True)
+def multiple(fruit: Sequence[str]):
+    print(fruit)
 
 @cli.command()
-@click.option("--confirm", prompt="Do you really want to ?", cls=ConfirmOption)
+@confirm_option("--confirm", prompt="Do you really want to ?")
 def confirm(confirm: bool):
     print(confirm)
 
@@ -67,32 +59,28 @@ def confirm_click(confirm: bool):
 
 
 @cli.command()
-@click.option("--path", cls=FilePathOption, default="/tmp/foo")
+@filepath_option("--path", default="/tmp/foo")
 def file(path: str):
     print(path)
 
 
 @cli.command()
-@click.option("--complete", type=click.Choice(FRUITS), cls=AutoCompleteOption)
+@auto_complete_option("--complete", type=click.Choice(FRUITS))
 def auto_choice(complete: str):
     print(complete)
 
 
 @cli.command()
-@click.option(
+@auto_complete_option(
     "--complete",
     prompt="What is your favourite fruit?",
-    choices=FRUITS,
-    cls=AutoCompleteOption,
-)
+    choices=FRUITS)
 def auto(complete: str):
     print(complete)
 
 
-from click_prompt import ChoiceArgument
-
 @cli.command()
-@click.argument("fruit", type=click.Choice(FRUITS), cls=ChoiceArgument)
+@choice_argument("fruit", type=click.Choice(FRUITS))
 def argument(fruit: str):
     print(fruit)
 
