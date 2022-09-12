@@ -8,7 +8,6 @@ import click
 # import rich_click as click
 
 from click_prompt import ChoiceOption
-from click_prompt import MultipleOption
 from click_prompt import ConfirmOption
 from click_prompt import FilePathOption
 from click_prompt import AutoCompleteOption
@@ -48,7 +47,8 @@ def single(choice: str):
     "--options",
     prompt="Select smoothie ingredients",
     type=click.Choice(FRUITS),
-    cls=MultipleOption,
+    multiple=True,
+    cls=ChoiceOption,
 )
 def multiple(options: Sequence[str]):
     print(options)

@@ -11,7 +11,6 @@ from click.core import Context
 
 from click_prompt.prompt_parameter import PromptParameter
 from click_prompt.prompt_parameter import ChoiceParameter
-from click_prompt.prompt_parameter import MultipleParameter
 from click_prompt.prompt_parameter import ConfirmParameter
 from click_prompt.prompt_parameter import FilePathParameter
 from click_prompt.prompt_parameter import AutoCompleteParameter
@@ -42,10 +41,6 @@ class PromptArgument(click.Argument, PromptParameter):
         return value, source
 
 class ChoiceArgument(ChoiceParameter, PromptArgument):
-    pass
-
-
-class MultipleArgument(MultipleParameter, PromptArgument):
     pass
 
 class ConfirmArgument(ConfirmParameter, PromptArgument):
