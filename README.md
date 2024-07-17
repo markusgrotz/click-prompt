@@ -4,8 +4,20 @@
 [![PyPI version](https://img.shields.io/pypi/v/click-prompt)](https://pypi.org/project/click-prompt/) 
 
 
-click-prompt provides more beautiful interactive options for the Python click
-library. The library is inspired by a post on [stackoverflow.com](https://stackoverflow.com/questions/54311067/)
+
+**click-prompt** is a Python library that enhances the functionality of the Click library by providing interactive prompts for user inputs. It features simple prompts to easily prompt users for a single/multi input from a list. It also allows for more advanced prompting such as path completion.
+This library is inspired by a post on [stackoverflow.com](https://stackoverflow.com/questions/54311067/).
+Contributions are welcome! Please send me an e-mail or create a pull request.
+
+
+## Installation
+
+To install `click-prompt`, use pip:
+
+```bash
+pip install click-prompt
+```
+
 
 ## Usage
 
@@ -23,6 +35,8 @@ def select_fruit(fruit: str):
 
 ## Example
 
+For more examples see the file [example.py](./example.py).
+
 ![Example](./docs/example_cli.gif)
 
 
@@ -38,3 +52,8 @@ instead of a `click.Option` decorator
  - `auto_complete_option`: Auto completion given a list
 
 for every `click.Option` there is also a `click.Argument` implementation
+
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for more information.
