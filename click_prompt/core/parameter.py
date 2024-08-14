@@ -5,9 +5,13 @@ from typing import List
 from typing import Sequence
 from typing import Mapping
 from typing import Tuple
+from typing import Callable
 
 from abc import ABC
 from abc import abstractmethod
+
+from inspect import isfunction
+from collections.abc import Iterable
 
 import click
 from click.core import Context
@@ -46,16 +50,31 @@ class ChoiceParameter(PromptParameter, ABC):
             print(self.type)
             raise Exception("ChoiceOption type arg must be click.Choice")
 
+    def get_choices(self) -> List[questionary.Choice]:
+        """
+        Returns a list of choices and check if it is listed as default value
+        """
+        if isfunction(self.default):
+            default = self.default()
+        else:
+            default = self.default
+
+        if not isinstance(default, Iterable):
+            default = [default]
+
+        return [questionary.Choice(n, checked=n in default) for n in self.type.choices]
+
+
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         if len(self.type.choices) == 1:
             return self.type.choices[0]
         if self.multiple:
             return questionary.checkbox(
-                self.prompt, choices=self.type.choices
+                self.prompt, choices=self.get_choices()
             ).unsafe_ask()
         else:
             return questionary.select(
-                self.prompt, choices=self.type.choices
+                self.prompt, choices=self.get_choices()
             ).unsafe_ask()
 
 
