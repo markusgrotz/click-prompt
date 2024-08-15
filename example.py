@@ -88,10 +88,13 @@ def auto_choice(fruit: str):
 
 @cli.command()
 @auto_complete_option(
-    "--complete", prompt="What is your favourite fruit?", choices=FRUITS, default="m"
+    "--fruit", prompt="What is your favourite fruit?", choices=FRUITS, default="m"
 )
-def auto(complete: str):
-    print(complete)
+def auto(fruit: str):
+    """
+    Choice any fruit you want. Autocompletion is provided by the `choice` parameter.
+    """
+    print(fruit)
 
 
 @cli.command()
