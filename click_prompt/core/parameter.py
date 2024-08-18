@@ -72,7 +72,7 @@ class ConfirmParameter(PromptParameter, ABC):
         super().__init__(param_decls, prompt=prompt, is_flag=True, **kwargs)
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
-        return questionary.confirm(self.prompt, default=self.get_default(ctx)).unsafe_ask()
+        return questionary.confirm(self.prompt, default=self.get_default(ctx) or False).unsafe_ask()
 
 
 
@@ -90,7 +90,7 @@ class FilePathParameter(PromptParameter, ABC):
         super().__init__(param_decls, prompt=prompt, **kwargs)
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
-        return questionary.path(self.prompt, default=self.get_default(ctx)).unsafe_ask()
+        return questionary.path(self.prompt, default=self.get_default(ctx) or "~").unsafe_ask()
 
 
 class AutoCompleteParameter(PromptParameter, ABC):
@@ -112,4 +112,4 @@ class AutoCompleteParameter(PromptParameter, ABC):
             self.choices = choices or []
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
-        return questionary.autocomplete(self.prompt, self.choices, self.get_default(ctx)).unsafe_ask()
+        return questionary.autocomplete(self.prompt, self.choices, self.get_default(ctx) or "").unsafe_ask()
