@@ -33,9 +33,18 @@ def cli(**kwargs):
 
 
 @cli.command()
-@choice_option("--fruit", type=click.Choice(FRUITS), prompt="What do you want to eat?")
+@choice_option(
+    "--fruit",
+    type=click.Choice(FRUITS),
+    prompt="What do you want to eat?",
+    default=FRUITS[3],
+)
 def single(fruit: str):
     print(fruit)
+
+
+def get_fruits():
+    return FRUITS[3:6] + FRUITS[7:8]
 
 
 @cli.command()
@@ -44,6 +53,7 @@ def single(fruit: str):
     prompt="Select smoothie ingredients",
     type=click.Choice(FRUITS),
     multiple=True,
+    default=get_fruits,
 )
 def multiple(fruit: Sequence[str]):
     print(fruit)
@@ -68,14 +78,17 @@ def file(path: str):
 
 
 @cli.command()
-@auto_complete_option("--complete", type=click.Choice(FRUITS))
-def auto_choice(complete: str):
-    print(complete)
+@auto_complete_option("--fruit", type=click.Choice(FRUITS), default="r")
+def auto_choice(fruit: str):
+    """
+    Select a fruit from a list by typing
+    """
+    print(fruit)
 
 
 @cli.command()
 @auto_complete_option(
-    "--complete", prompt="What is your favourite fruit?", choices=FRUITS
+    "--complete", prompt="What is your favourite fruit?", choices=FRUITS, default="m"
 )
 def auto(complete: str):
     print(complete)
