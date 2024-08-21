@@ -5,18 +5,15 @@ from typing import List
 from typing import Sequence
 from typing import Mapping
 from typing import Tuple
-from typing import Callable
 
 from abc import ABC
 from abc import abstractmethod
-
-from inspect import isfunction
-from collections.abc import Iterable
 
 import click
 from click.core import Context
 
 import questionary
+
 
 
 class PromptParameter(click.Parameter, ABC):
@@ -42,40 +39,22 @@ class ChoiceParameter(PromptParameter, ABC):
         self,
         param_decls: Optional[Sequence[str]] = None,
         prompt: Union[bool, str] = True,
-        multiple: bool = False,
+        multiple: bool=False,
         **kwargs
     ):
         super().__init__(param_decls, prompt=prompt, multiple=multiple, **kwargs)
+
         if not isinstance(self.type, click.Choice):
             print(self.type)
             raise Exception("ChoiceOption type arg must be click.Choice")
-
-    def get_choices(self) -> List[questionary.Choice]:
-        """
-        Returns a list of choices and check if it is listed as default value
-        """
-        if isfunction(self.default):
-            default = self.default()
-        else:
-            default = self.default
-
-        if not isinstance(default, Iterable):
-            default = [default]
-
-        return [questionary.Choice(n, checked=n in default) for n in self.type.choices]
-
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         if len(self.type.choices) == 1:
             return self.type.choices[0]
         if self.multiple:
-            return questionary.checkbox(
-                self.prompt, choices=self.get_choices()
-            ).unsafe_ask()
+            return questionary.checkbox(self.prompt, choices=self.type.choices, default=self.get_default(ctx)).unsafe_ask()
         else:
-            return questionary.select(
-                self.prompt, choices=self.get_choices()
-            ).unsafe_ask()
+            return questionary.select(self.prompt, choices=self.type.choices, default=self.get_default(ctx)).unsafe_ask()
 
 
 class ConfirmParameter(PromptParameter, ABC):
@@ -93,7 +72,8 @@ class ConfirmParameter(PromptParameter, ABC):
         super().__init__(param_decls, prompt=prompt, is_flag=True, **kwargs)
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
-        return questionary.confirm(self.prompt, default=self.default).unsafe_ask()
+        return questionary.confirm(self.prompt, default=self.get_default(ctx) or False).unsafe_ask()
+
 
 
 class FilePathParameter(PromptParameter, ABC):
@@ -108,10 +88,9 @@ class FilePathParameter(PromptParameter, ABC):
         **kwargs
     ):
         super().__init__(param_decls, prompt=prompt, **kwargs)
-        self.default = self.default or "~"
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
-        return questionary.path(self.prompt, default=self.default).unsafe_ask()
+        return questionary.path(self.prompt, default=self.get_default(ctx) or "~").unsafe_ask()
 
 
 class AutoCompleteParameter(PromptParameter, ABC):
@@ -131,9 +110,6 @@ class AutoCompleteParameter(PromptParameter, ABC):
             self.choices = self.type.choices
         else:
             self.choices = choices or []
-        self.default = self.default or ""
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
-        return questionary.autocomplete(
-            self.prompt, self.choices, self.default
-        ).unsafe_ask()
+        return questionary.autocomplete(self.prompt, self.choices, self.get_default(ctx) or "").unsafe_ask()
