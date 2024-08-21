@@ -48,11 +48,21 @@ class ChoiceParameter(PromptParameter, ABC):
             print(self.type)
             raise Exception("ChoiceOption type arg must be click.Choice")
 
+
+    def prepare_choice_list(self, ctx: click.core.Context) -> List[questionary.Choice]:
+        """
+        Returns a list of choices and check if it is listed as default value
+        """
+        default = self.get_default(ctx)
+        return [questionary.Choice(n, checked=n in default) 
+                for n in self.type.choices]
+
+
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         if len(self.type.choices) == 1:
             return self.type.choices[0]
         if self.multiple:
-            return questionary.checkbox(self.prompt, choices=self.type.choices, default=self.get_default(ctx)).unsafe_ask()
+            return questionary.checkbox(self.prompt, choices=self.prepare_choice_list(ctx)).unsafe_ask()
         else:
             return questionary.select(self.prompt, choices=self.type.choices, default=self.get_default(ctx)).unsafe_ask()
 
