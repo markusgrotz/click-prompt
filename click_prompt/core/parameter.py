@@ -52,6 +52,8 @@ class ChoiceParameter(PromptParameter, ABC):
         Returns a list of choices and check if it is listed as default value
         """
         default = self.get_default(ctx)
+        if default is None:
+            default = []
         return [questionary.Choice(n, checked=n in default) for n in self.type.choices]
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
