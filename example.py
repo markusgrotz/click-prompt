@@ -33,7 +33,12 @@ def cli(**kwargs):
 
 
 @cli.command()
-@choice_option("--fruit", type=click.Choice(FRUITS), prompt="What do you want to eat?", default=FRUITS[3])
+@choice_option(
+    "--fruit",
+    type=click.Choice(FRUITS),
+    prompt="What do you want to eat?",
+    default=FRUITS[3],
+)
 def single(fruit: str):
     print(fruit)
 
@@ -41,13 +46,14 @@ def single(fruit: str):
 def get_fruits():
     return FRUITS[3:6] + FRUITS[7:8]
 
+
 @cli.command()
 @choice_option(
     "--fruit",
     prompt="Select smoothie ingredients",
     type=click.Choice(FRUITS),
     multiple=True,
-    default=get_fruits
+    default=get_fruits,
 )
 def multiple(fruit: Sequence[str]):
     print(fruit)
