@@ -72,7 +72,7 @@ def file(path: str):
 
 
 @cli.command()
-@auto_complete_option("--fruit", type=click.Choice(FRUITS))
+@auto_complete_option("--fruit", type=click.Choice(FRUITS), default="r")
 def auto_choice(fruit: str):
     """
     Select a fruit from a list by typing
@@ -82,7 +82,7 @@ def auto_choice(fruit: str):
 
 @cli.command()
 @auto_complete_option(
-    "--complete", prompt="What is your favourite fruit?", choices=FRUITS
+    "--complete", prompt="What is your favourite fruit?", choices=FRUITS, default="m"
 )
 def auto(complete: str):
     print(complete)
