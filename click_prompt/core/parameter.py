@@ -104,7 +104,7 @@ class FilePathParameter(PromptParameter, ABC):
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.path(
-            self.prompt, default=self.get_default(ctx) or "~"
+            self.prompt, default=self.get_default(ctx) or ""
         ).unsafe_ask()
 
 
