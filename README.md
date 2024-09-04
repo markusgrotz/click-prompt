@@ -2,6 +2,8 @@
 
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/click-prompt)](https://pypi.org/project/click-prompt/) 
 [![PyPI version](https://img.shields.io/pypi/v/click-prompt)](https://pypi.org/project/click-prompt/) 
+[![License](https://img.shields.io/pypi/l/click-prompt)](./LICENSE.md)
+[![Code style](https://img.shields.io/badge/code%20style-black-black)](https://black.readthedocs.io/en/stable/)
 
 
 

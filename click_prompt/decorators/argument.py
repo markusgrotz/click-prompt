@@ -1,4 +1,3 @@
-from functools import wraps
 import click
 
 from click_prompt.core.argument import ChoiceArgument
