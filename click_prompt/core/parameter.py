@@ -1,3 +1,22 @@
+"""
+Parameter module for the click-prompt package.
+
+This module extends the functionality of click's Parameter class to create
+interactive command-line parameters that prompt users for input.a
+
+Module for interactive command-line parameters in click-prompt.
+
+Defines classes that extend `click.Parameter` to include user prompts, handling 
+choices, confirmations, file paths, and auto-complete options.
+
+Classes:
+    - PromptParameter: Base class for parameters with user prompts.
+    - ChoiceParameter: Parameter for selecting from choices.
+    - ConfirmParameter: Parameter for yes/no confirmations.
+    - FilePathParameter: Parameter for file path input.
+    - AutoCompleteParameter: Parameter with auto-complete functionality.
+"""
+
 from typing import Any
 from typing import Optional
 from typing import Union
