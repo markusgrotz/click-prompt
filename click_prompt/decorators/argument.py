@@ -1,4 +1,7 @@
-from functools import wraps
+"""
+Module for defining the argument decorators.
+"""
+
 import click
 
 from click_prompt.core.argument import ChoiceArgument
@@ -8,6 +11,10 @@ from click_prompt.core.argument import AutoCompleteArgument
 
 
 def choice_argument(*args, **kwargs):
+    """
+    Argument decorator for :class:`~click_prompt.core.parameter.ChoiceParameter`
+    """
+
     def decorator(f):
         return click.argument(*args, **kwargs, cls=ChoiceArgument)(f)
 
@@ -15,6 +22,10 @@ def choice_argument(*args, **kwargs):
 
 
 def confirm_argument(*args, **kwargs):
+    """
+    Argument decorator for :class:`~click_prompt.core.parameter.ConfirmParameter`
+    """
+
     def decorator(f):
         return click.argument(*args, **kwargs, cls=ConfirmArgument)(f)
 
@@ -22,6 +33,10 @@ def confirm_argument(*args, **kwargs):
 
 
 def filepath_argument(*args, **kwargs):
+    """
+    Argument decorator for :class:`~click_prompt.core.parameter.FilePathParameter`
+    """
+
     def decorator(f):
         return click.argument(*args, **kwargs, cls=FilePathArgument)(f)
 
@@ -29,6 +44,10 @@ def filepath_argument(*args, **kwargs):
 
 
 def auto_complete_argument(*args, **kwargs):
+    """
+    Argument decorator for :class:`~click_prompt.core.parameter.AutoCompleteParameter`
+    """
+
     def decorator(f):
         return click.argument(*args, **kwargs, cls=AutoCompleteArgument)(f)
 

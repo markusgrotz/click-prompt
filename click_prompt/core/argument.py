@@ -1,3 +1,7 @@
+"""
+Contains the argument implementations
+"""
+
 from typing import Optional
 from typing import Sequence
 from typing import Union
@@ -17,6 +21,10 @@ from click_prompt.core.parameter import AutoCompleteParameter
 
 
 class PromptArgument(click.Argument, PromptParameter):
+    """
+    General class
+    """
+
     def __init__(
         self,
         param_decls: Optional[Sequence[str]] = None,
@@ -42,16 +50,24 @@ class PromptArgument(click.Argument, PromptParameter):
 
 
 class ChoiceArgument(ChoiceParameter, PromptArgument):
-    pass
+    """
+    Argument decorator for :class:`~click_prompt.core.parameter.ChoiceArgument`
+    """
 
 
 class ConfirmArgument(ConfirmParameter, PromptArgument):
-    pass
+    """
+    Argument decorator for :class:`~click_prompt.core.parameter.ConfirmParameter`
+    """
 
 
 class FilePathArgument(FilePathParameter, PromptArgument):
-    pass
+    """
+    Argument decorator for :class:`~click_prompt.core.parameter.PromptArgument`
+    """
 
 
 class AutoCompleteArgument(AutoCompleteParameter, PromptArgument):
-    pass
+    """
+    Argument decorator for :class:`~click_prompt.core.parameter.AutoCompleteParameter`
+    """
