@@ -147,3 +147,22 @@ class AutoCompleteParameter(PromptParameter, ABC):
         return questionary.autocomplete(
             self.prompt, self.choices, self.get_default(ctx) or ""
         ).unsafe_ask()
+
+
+class InputTextParameter(PromptParameter, ABC):
+    """
+    Raw text user input.
+    """
+
+    def __init__(
+        self,
+        param_decls: Optional[Sequence[str]] = None,
+        prompt: Union[bool, str] = True,
+        **kwargs
+    ):
+        super().__init__(param_decls, prompt=prompt, **kwargs)
+
+    def prompt_for_value(self, ctx: click.core.Context) -> Any:
+        return questionary.text(
+            self.prompt
+        ).unsafe_ask()

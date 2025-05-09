@@ -12,6 +12,8 @@ from click_prompt import confirm_option
 from click_prompt import filepath_option
 from click_prompt import auto_complete_option
 from click_prompt import choice_argument
+from click_prompt import input_text_option
+from click_prompt import input_text_argument
 
 FRUITS = [
     "Apples",
@@ -101,6 +103,31 @@ def auto(fruit: str):
 @choice_argument("fruit", type=click.Choice(FRUITS))
 def argument(fruit: str):
     print(fruit)
+
+
+@cli.command()
+@input_text_option("-f", "--fruit", type=click.STRING, prompt="What fruit")
+def text_opt(fruit: str):
+    print(fruit)
+
+
+@cli.command()
+@input_text_option("-i", "--integer", type=click.INT, prompt="Integer")
+def int_opt(integer: int):
+    print(f"Int: {integer}")
+
+
+@cli.command()
+@input_text_argument("fruit", type=click.STRING, prompt="What fruit")
+def text_arg(fruit: str):
+    print(fruit)
+
+
+@cli.command()
+@input_text_argument("integer", type=click.INT, prompt="Integer")
+def int_arg(integer: int):
+    print(f"Int: {integer}")
+
 
 
 if __name__ == "__main__":

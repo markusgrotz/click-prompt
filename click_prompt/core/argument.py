@@ -18,6 +18,7 @@ from click_prompt.core.parameter import ChoiceParameter
 from click_prompt.core.parameter import ConfirmParameter
 from click_prompt.core.parameter import FilePathParameter
 from click_prompt.core.parameter import AutoCompleteParameter
+from click_prompt.core.parameter import InputTextParameter
 
 
 class PromptArgument(click.Argument, PromptParameter):
@@ -70,4 +71,10 @@ class FilePathArgument(FilePathParameter, PromptArgument):
 class AutoCompleteArgument(AutoCompleteParameter, PromptArgument):
     """
     Argument decorator for :class:`~click_prompt.core.parameter.AutoCompleteParameter`
+    """
+
+
+class InputTextArgument(InputTextParameter, PromptArgument):
+    """
+    Argument decorator for :class:`~click_prompt.core.parameter.AInputTextParameter`
     """

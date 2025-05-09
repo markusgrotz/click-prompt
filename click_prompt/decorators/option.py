@@ -8,6 +8,7 @@ from click_prompt.core.option import ChoiceOption
 from click_prompt.core.option import ConfirmOption
 from click_prompt.core.option import FilePathOption
 from click_prompt.core.option import AutoCompleteOption
+from click_prompt.core.option import InputTextOption
 
 
 def choice_option(*args, **kwargs):
@@ -50,5 +51,16 @@ def auto_complete_option(*args, **kwargs):
 
     def decorator(f):
         return click.option(*args, **kwargs, cls=AutoCompleteOption)(f)
+
+    return decorator
+
+
+def input_text_option(*args, **kwargs):
+    """
+    Option decorator for :class:`~click_prompt.core.parameter.InputTextParameter`
+    """
+
+    def decorator(f):
+        return click.option(*args, **kwargs, cls=InputTextOption)(f)
 
     return decorator
