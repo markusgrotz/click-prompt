@@ -107,26 +107,16 @@ def argument(fruit: str):
 
 @cli.command()
 @input_text_option("-f", "--fruit", type=click.STRING, prompt="What fruit")
-def text_opt(fruit: str):
-    print(fruit)
-
-
-@cli.command()
-@input_text_option("-i", "--integer", type=click.INT, prompt="Integer")
-def int_opt(integer: int):
-    print(f"Int: {integer}")
+@input_text_option("-q", "--quantity", type=click.INT, prompt="How many")
+def text_opt(fruit: str, quantity: int):
+    print(f"Fruit: {fruit} | Quantity: {quantity}")
 
 
 @cli.command()
 @input_text_argument("fruit", type=click.STRING, prompt="What fruit")
-def text_arg(fruit: str):
-    print(fruit)
-
-
-@cli.command()
-@input_text_argument("integer", type=click.INT, prompt="Integer")
-def int_arg(integer: int):
-    print(f"Int: {integer}")
+@input_text_argument("quantity", type=click.INT, prompt="How many")
+def text_arg(fruit: str, quantity: int):
+    print(f"Fruit: {fruit} | Quantity: {quantity}")
 
 
 
