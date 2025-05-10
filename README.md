@@ -53,6 +53,7 @@ instead of a `click.Option` decorator
  - `confirm_option`: Yes/No confirmation
  - `filepath_option`: Select a file path with auto completion
  - `auto_complete_option`: Auto completion given a list
+ - `input_text_option`: Input any text
 
 for every `click.Option` there is also a `click.Argument` implementation
 
