@@ -2,11 +2,11 @@
 Parameter module for the click-prompt package.
 
 This module extends the functionality of click's Parameter class to create
-interactive command-line parameters that prompt users for input.a
+interactive command-line parameters that prompt users for input.
 
 Module for interactive command-line parameters in click-prompt.
 
-Defines classes that extend `click.Parameter` to include user prompts, handling 
+Defines classes that extend `click.Parameter` to include user prompts, handling
 choices, confirmations, file paths, and auto-complete options.
 
 Classes:
@@ -108,7 +108,7 @@ class ConfirmParameter(PromptParameter, ABC):
 
 class FilePathParameter(PromptParameter, ABC):
     """
-    Allows the user to sepcify a path.
+    Allows the user to specify a path.
     """
 
     def __init__(
