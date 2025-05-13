@@ -164,5 +164,5 @@ class InputTextParameter(PromptParameter, ABC):
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.text(
-            self.prompt, default=str(self.get_default(ctx)) or ""
+            self.prompt, default=str(self.get_default(ctx) or "")
         ).unsafe_ask()
