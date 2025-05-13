@@ -1,17 +1,17 @@
-# click-prompt 
+
+# click-prompt
 
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/click-prompt)](https://pypi.org/project/click-prompt/) 
 [![PyPI version](https://img.shields.io/pypi/v/click-prompt)](https://pypi.org/project/click-prompt/) 
-[![License](https://img.shields.io/pypi/l/click-prompt)](./LICENSE.md)
+[![License](https://img.shields.io/pypi/l/click-prompt)](https://github.com/markusgrotz/click-prompt/blob/main/LICENSE.md)
 [![Code style](https://img.shields.io/badge/code%20style-black-black)](https://black.readthedocs.io/en/stable/)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/click-prompt)
 
+**click-prompt** extends the [Click](https://click.palletsprojects.com/) command-line interface library by adding intuitive, interactive prompts. It's perfect for building more user-friendly CLI tools.
 
-
-**click-prompt** is a Python library that enhances the functionality of the Click library by providing interactive prompts for user inputs. It features simple prompts to easily prompt users for a single/multi input from a list. It also allows for more advanced prompting such as path completion.
 This library is inspired by a post on [stackoverflow.com](https://stackoverflow.com/questions/54311067/).
-Contributions are welcome! Please send me an e-mail or create a pull request.
 
+Contributions are welcome! [Open a pull request](https://github.com/markusgrotz/click-prompt/pulls) or [submit an issue](https://github.com/markusgrotz/click-prompt/issues).
 
 ## Installation
 
@@ -21,10 +21,9 @@ To install `click-prompt`, use pip:
 pip install click-prompt
 ```
 
-
 ## Usage
 
-The library can be used with decorators:
+Here’s a basic example using the `choice_option` decorator:
 
 ```python
 import click
@@ -33,31 +32,38 @@ from click_prompt import choice_option
 @click.command()
 @choice_option('--fruit', type=click.Choice(['Apples', 'Bananas', 'Grapefruits', 'Mangoes']))
 def select_fruit(fruit: str):
-    print(fruit)
+    """Prompt user to select a fruit from a list."""
+    print(f"You selected: {fruit}")
+
+if __name__ == '__main__':
+    select_fruit()
 ```
 
 ## Example
 
-For more examples see the file [example.py](./example.py).
+For more examples see the file [example.py](https://github.com/markusgrotz/click-prompt/blob/main/example.py).
 
-![Example](./docs/example_cli.gif)
-
+![Example](https://github.com/markusgrotz/click-prompt/blob/main/docs/example_cli.gif?raw=true)
 
 ## Available Decorators
 
-Here is a list of available decorators that can be used with the click library
-instead of a `click.Option` decorator
+Each of these decorators replaces a `click.Option` (and also works with `click.Argument`):
 
- - `choice_option`: Select a single item out of a list. Use the parameter
-   `multiple=True` to select multiple items out of a list
- - `confirm_option`: Yes/No confirmation
- - `filepath_option`: Select a file path with auto completion
- - `auto_complete_option`: Auto completion given a list
- - `input_text_option`: Input any text
+- **`choice_option`**  
+  Prompt the user to select one (or more with `multiple=True`) from a list.
 
-for every `click.Option` there is also a `click.Argument` implementation
+- **`confirm_option`**  
+  Yes/No confirmation prompt.
 
+- **`filepath_option`**  
+  Prompt the user to select a file path with auto-completion.
+
+- **`auto_complete_option`**  
+  Input prompt with tab completion from a list of choices.
+
+- **`input_text_option`**  
+  Prompt the user for free-form text input.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for more information.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/markusgrotz/click-prompt/blob/main/LICENSE.md) file for more information.
