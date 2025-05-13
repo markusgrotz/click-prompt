@@ -61,8 +61,7 @@ class ChoiceParameter(PromptParameter, ABC):
         super().__init__(param_decls, prompt=prompt, multiple=multiple, **kwargs)
 
         if not isinstance(self.type, click.Choice):
-            print(self.type)
-            raise Exception("ChoiceOption type arg must be click.Choice")
+            raise TypeError("ChoiceOption type arg must be click.Choice")
 
     def prepare_choice_list(self, ctx: click.core.Context) -> List[questionary.Choice]:
         """
