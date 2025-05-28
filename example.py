@@ -6,6 +6,7 @@ Example CLI application using click and click_prompt for interactive prompts.
 from typing import Sequence
 
 import click
+
 # import rich_click as click
 
 from click_prompt import choice_option
@@ -33,6 +34,7 @@ FRUITS = [
 @click.group()
 def cli():
     """Main CLI entry point."""
+
 
 @cli.command()
 @choice_option(
@@ -109,7 +111,9 @@ def argument(fruit: str):
 
 
 @cli.command()
-@input_text_option("-f", "--fruit", type=click.STRING, prompt="What fruit", default="Bananas")
+@input_text_option(
+    "-f", "--fruit", type=click.STRING, prompt="What fruit", default="Bananas"
+)
 @input_text_option("-q", "--quantity", type=click.INT, prompt="How many", default=2)
 def text_opt(fruit: str, quantity: int):
     """Handle fruit and quantity inputs via options."""

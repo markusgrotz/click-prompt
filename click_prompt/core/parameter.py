@@ -46,7 +46,6 @@ class PromptParameter(click.Parameter, ABC):
         super().__init__(param_decls, **kwargs)
         self.prompt = prompt
 
-
     @abstractmethod
     def prompt_for_value(self, ctx: Context):
         """
@@ -175,5 +174,8 @@ class InputTextParameter(PromptParameter, ABC):
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.text(
-            self.prompt, default=str(self.get_default(ctx) if self.get_default(ctx) is not None else "")
+            self.prompt,
+            default=str(
+                self.get_default(ctx) if self.get_default(ctx) is not None else ""
+            ),
         ).unsafe_ask()
