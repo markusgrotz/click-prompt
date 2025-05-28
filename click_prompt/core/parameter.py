@@ -33,12 +33,25 @@ import questionary
 
 
 class PromptParameter(click.Parameter, ABC):
+    """
+    Abstract base class for click parameters that require prompting the user for input.
+    """
 
-    prompt: Union[bool, str]
+    def __init__(
+        self,
+        param_decls: Optional[Sequence[str]] = None,
+        prompt: Union[bool, str] = True,
+        **kwargs
+    ):
+        super().__init__(param_decls, **kwargs)
+        self.prompt = prompt
+
 
     @abstractmethod
     def prompt_for_value(self, ctx: Context):
-        pass
+        """
+        Prompt the user for a value using a questionary interface.
+        """
 
 
 class ChoiceParameter(PromptParameter, ABC):
@@ -79,10 +92,9 @@ class ChoiceParameter(PromptParameter, ABC):
             return questionary.checkbox(
                 self.prompt, choices=self.prepare_choice_list(ctx)
             ).unsafe_ask()
-        else:
-            return questionary.select(
-                self.prompt, choices=self.type.choices, default=self.get_default(ctx)
-            ).unsafe_ask()
+        return questionary.select(
+            self.prompt, choices=self.type.choices, default=self.get_default(ctx)
+        ).unsafe_ask()
 
 
 class ConfirmParameter(PromptParameter, ABC):
