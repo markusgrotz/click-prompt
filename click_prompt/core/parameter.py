@@ -2,11 +2,11 @@
 Parameter module for the click-prompt package.
 
 This module extends the functionality of click's Parameter class to create
-interactive command-line parameters that prompt users for input.a
+interactive command-line parameters that prompt users for input.
 
 Module for interactive command-line parameters in click-prompt.
 
-Defines classes that extend `click.Parameter` to include user prompts, handling 
+Defines classes that extend `click.Parameter` to include user prompts, handling
 choices, confirmations, file paths, and auto-complete options.
 
 Classes:
@@ -33,12 +33,24 @@ import questionary
 
 
 class PromptParameter(click.Parameter, ABC):
+    """
+    Abstract base class for click parameters that require prompting the user for input.
+    """
 
-    prompt: Union[bool, str]
+    def __init__(
+        self,
+        param_decls: Optional[Sequence[str]] = None,
+        prompt: Union[bool, str] = True,
+        **kwargs
+    ):
+        super().__init__(param_decls, **kwargs)
+        self.prompt = prompt
 
     @abstractmethod
     def prompt_for_value(self, ctx: Context):
-        pass
+        """
+        Prompt the user for a value using a questionary interface.
+        """
 
 
 class ChoiceParameter(PromptParameter, ABC):
@@ -61,8 +73,7 @@ class ChoiceParameter(PromptParameter, ABC):
         super().__init__(param_decls, prompt=prompt, multiple=multiple, **kwargs)
 
         if not isinstance(self.type, click.Choice):
-            print(self.type)
-            raise Exception("ChoiceOption type arg must be click.Choice")
+            raise TypeError("ChoiceOption type arg must be click.Choice")
 
     def prepare_choice_list(self, ctx: click.core.Context) -> List[questionary.Choice]:
         """
@@ -80,10 +91,9 @@ class ChoiceParameter(PromptParameter, ABC):
             return questionary.checkbox(
                 self.prompt, choices=self.prepare_choice_list(ctx)
             ).unsafe_ask()
-        else:
-            return questionary.select(
-                self.prompt, choices=self.type.choices, default=self.get_default(ctx)
-            ).unsafe_ask()
+        return questionary.select(
+            self.prompt, choices=self.type.choices, default=self.get_default(ctx)
+        ).unsafe_ask()
 
 
 class ConfirmParameter(PromptParameter, ABC):
@@ -108,7 +118,7 @@ class ConfirmParameter(PromptParameter, ABC):
 
 class FilePathParameter(PromptParameter, ABC):
     """
-    Allows the user to sepcify a path.
+    Allows the user to specify a path.
     """
 
     def __init__(
@@ -164,5 +174,8 @@ class InputTextParameter(PromptParameter, ABC):
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.text(
-            self.prompt, default=str(self.get_default(ctx) if self.get_default(ctx) != None else "")
+            self.prompt,
+            default=str(
+                self.get_default(ctx) if self.get_default(ctx) is not None else ""
+            ),
         ).unsafe_ask()

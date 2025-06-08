@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-
+"""
+Example CLI application using click and click_prompt for interactive prompts.
+"""
 
 from typing import Sequence
 
@@ -30,8 +32,8 @@ FRUITS = [
 
 
 @click.group()
-def cli(**kwargs):
-    pass
+def cli():
+    """Main CLI entry point."""
 
 
 @cli.command()
@@ -42,10 +44,12 @@ def cli(**kwargs):
     default=FRUITS[3],
 )
 def single(fruit: str):
+    """Handle a single fruit selection."""
     print(fruit)
 
 
 def get_fruits():
+    """Return a subset of fruits as default choices."""
     return FRUITS[3:6] + FRUITS[7:8]
 
 
@@ -58,33 +62,35 @@ def get_fruits():
     default=get_fruits,
 )
 def multiple(fruit: Sequence[str]):
+    """Handle multiple fruit selections."""
     print(fruit)
 
 
 @cli.command()
 @confirm_option("--confirm", prompt="Do you really want to ?")
-def confirm(confirm: bool):
+def confirm_cmd(confirm: bool):
+    """Handle a confirmation prompt."""
     print(confirm)
 
 
 @cli.command()
 @click.option("--confirm", prompt="Confirm", is_flag=True)
 def confirm_click(confirm: bool):
+    """Handle a confirmation flag using plain Click."""
     print(confirm)
 
 
 @cli.command()
 @filepath_option("--path", default="/tmp/foo")
 def file(path: str):
+    """Handle a file path input."""
     print(path)
 
 
 @cli.command()
 @auto_complete_option("--fruit", type=click.Choice(FRUITS), default="r")
 def auto_choice(fruit: str):
-    """
-    Select a fruit from a list by typing
-    """
+    """Autocomplete fruit selection without prompt."""
     print(fruit)
 
 
@@ -93,22 +99,24 @@ def auto_choice(fruit: str):
     "--fruit", prompt="What is your favourite fruit?", choices=FRUITS, default="m"
 )
 def auto(fruit: str):
-    """
-    Choice any fruit you want. Autocompletion is provided by the `choice` parameter.
-    """
+    """Autocomplete fruit selection with prompt."""
     print(fruit)
 
 
 @cli.command()
 @choice_argument("fruit", type=click.Choice(FRUITS))
 def argument(fruit: str):
+    """Handle a fruit selection as a positional argument."""
     print(fruit)
 
 
 @cli.command()
-@input_text_option("-f", "--fruit", type=click.STRING, prompt="What fruit")
-@input_text_option("-q", "--quantity", type=click.INT, prompt="How many")
+@input_text_option(
+    "-f", "--fruit", type=click.STRING, prompt="What fruit", default="Bananas"
+)
+@input_text_option("-q", "--quantity", type=click.INT, prompt="How many", default=2)
 def text_opt(fruit: str, quantity: int):
+    """Handle fruit and quantity inputs via options."""
     print(f"Fruit: {fruit} | Quantity: {quantity}")
 
 
@@ -116,8 +124,8 @@ def text_opt(fruit: str, quantity: int):
 @input_text_argument("fruit", type=click.STRING, prompt="What fruit")
 @input_text_argument("quantity", type=click.INT, prompt="How many")
 def text_arg(fruit: str, quantity: int):
+    """Handle fruit and quantity inputs via arguments."""
     print(f"Fruit: {fruit} | Quantity: {quantity}")
-
 
 
 if __name__ == "__main__":

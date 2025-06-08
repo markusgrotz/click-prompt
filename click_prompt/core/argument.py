@@ -9,6 +9,8 @@ from typing import Mapping
 from typing import Any
 from typing import Tuple
 
+from abc import ABC
+
 import click
 from click.core import ParameterSource
 from click.core import Context
@@ -21,7 +23,7 @@ from click_prompt.core.parameter import AutoCompleteParameter
 from click_prompt.core.parameter import InputTextParameter
 
 
-class PromptArgument(click.Argument, PromptParameter):
+class PromptArgument(click.Argument, PromptParameter, ABC):
     """
     General class
     """
@@ -33,8 +35,9 @@ class PromptArgument(click.Argument, PromptParameter):
         multiple: bool = False,
         **kwargs
     ):
-        self.prompt = prompt
         super().__init__(param_decls, **kwargs)
+        self.prompt = prompt
+        self.multiple = multiple
 
     def consume_value(
         self, ctx: Context, opts: Mapping[str, Any]
