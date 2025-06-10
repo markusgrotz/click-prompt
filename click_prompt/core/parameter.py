@@ -37,14 +37,8 @@ class PromptParameter(click.Parameter, ABC):
     Abstract base class for click parameters that require prompting the user for input.
     """
 
-    def __init__(
-        self,
-        param_decls: Optional[Sequence[str]] = None,
-        prompt: Union[bool, str] = True,
-        **kwargs
-    ):
+    def __init__(self, param_decls: Optional[Sequence[str]] = None, **kwargs):
         super().__init__(param_decls, **kwargs)
-        self.prompt = prompt
 
     @abstractmethod
     def prompt_for_value(self, ctx: Context):
