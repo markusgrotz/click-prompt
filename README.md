@@ -5,7 +5,8 @@
 [![PyPI version](https://img.shields.io/pypi/v/click-prompt)](https://pypi.org/project/click-prompt/) 
 [![License](https://img.shields.io/pypi/l/click-prompt)](https://github.com/markusgrotz/click-prompt/blob/main/LICENSE.md)
 [![Code style](https://img.shields.io/badge/code%20style-black-black)](https://black.readthedocs.io/en/stable/)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/click-prompt)
+[![Downloads/Month](https://pepy.tech/badge/click-prompt/month)](https://pepy.tech/project/click-prompt)
+
 
 **click-prompt** extends the [Click](https://click.palletsprojects.com/) command-line interface library by adding intuitive, interactive prompts. It's perfect for building more user-friendly CLI tools.
 
