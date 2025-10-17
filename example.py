@@ -5,6 +5,8 @@ Example CLI application using click and click_prompt for interactive prompts.
 
 from typing import Sequence
 
+from prompt_toolkit.styles import Style
+
 import click
 
 # import rich_click as click
@@ -91,6 +93,23 @@ def file(path: str):
 @auto_complete_option("--fruit", type=click.Choice(FRUITS), default="r")
 def auto_choice(fruit: str):
     """Autocomplete fruit selection without prompt."""
+    print(fruit)
+
+
+style = Style(
+    [
+        ("question", "fg:#FF0000 bg:#00FF00 bold"),
+        ("answer", "fg:#FF0000 bg:#FFFFFF"),
+    ]
+)
+
+
+@cli.command()
+@auto_complete_option("--fruit", type=click.Choice(FRUITS), style=style)
+def auto_choice_fancy(fruit: str):
+    """Autocomplete fruit selection with a customized styled  prompt.
+    https://python-prompt-toolkit.readthedocs.io/en/stable/pages/advanced_topics/styling.html
+    """
     print(fruit)
 
 
