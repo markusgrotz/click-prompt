@@ -5,9 +5,11 @@ All notable changes to this project will be documented in this file.
 
 ## [upcoming] -
 
+- Add parameter for different styled prompts ([#13](https://github.com/markusgrotz/click-prompt/pull/13) (Ankur Grover)
+
 ## [0.6.5] - 2025-06-10
 
-- fix incorrect parameter names in PromptParameter when prompt argument is set to True
+- Fix incorrect parameter names in PromptParameter when prompt argument is set to True
 
 ## [0.6.4] - 2025-06-08
 
