@@ -17,7 +17,7 @@ Classes:
     - AutoCompleteParameter: Parameter with auto-complete functionality.
 """
 
-from typing import Any
+from typing import Any, Dict
 from typing import Optional
 from typing import Union
 from typing import List
@@ -37,7 +37,8 @@ class PromptParameter(click.Parameter, ABC):
     Abstract base class for click parameters that require prompting the user for input.
     """
 
-    def __init__(self, param_decls: Optional[Sequence[str]] = None, **kwargs):
+    def __init__(self, param_decls: Optional[Sequence[str]] = None,style:questionary.Style = None, **kwargs):
+        self.style = style or None
         super().__init__(param_decls, **kwargs)
 
     @abstractmethod
@@ -83,10 +84,10 @@ class ChoiceParameter(PromptParameter, ABC):
             return self.type.choices[0]
         if self.multiple:
             return questionary.checkbox(
-                self.prompt, choices=self.prepare_choice_list(ctx)
+                self.prompt, choices=self.prepare_choice_list(ctx),style=self.style
             ).unsafe_ask()
         return questionary.select(
-            self.prompt, choices=self.type.choices, default=self.get_default(ctx)
+            self.prompt, choices=self.type.choices, default=self.get_default(ctx),style=self.style
         ).unsafe_ask()
 
 
@@ -106,7 +107,7 @@ class ConfirmParameter(PromptParameter, ABC):
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.confirm(
-            self.prompt, default=self.get_default(ctx) or False
+            self.prompt, default=self.get_default(ctx) or False,style=self.style
         ).unsafe_ask()
 
 
@@ -125,7 +126,7 @@ class FilePathParameter(PromptParameter, ABC):
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.path(
-            self.prompt, default=self.get_default(ctx) or ""
+            self.prompt, default=self.get_default(ctx) or "",style=self.style
         ).unsafe_ask()
 
 
@@ -139,8 +140,10 @@ class AutoCompleteParameter(PromptParameter, ABC):
         param_decls: Optional[Sequence[str]] = None,
         prompt: Union[bool, str] = True,
         choices=None,
+        meta_information: Optional[Dict[str, Any]] = None,
         **kwargs
     ):
+        self.meta_information = meta_information or {}
         super().__init__(param_decls, prompt=prompt, **kwargs)
         if isinstance(self.type, click.Choice):
             self.choices = self.type.choices
@@ -149,7 +152,7 @@ class AutoCompleteParameter(PromptParameter, ABC):
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
         return questionary.autocomplete(
-            self.prompt, self.choices, self.get_default(ctx) or ""
+            self.prompt, self.choices,self.get_default(ctx) or "",meta_information=self.meta_information,style=self.style
         ).unsafe_ask()
 
 
@@ -172,4 +175,5 @@ class InputTextParameter(PromptParameter, ABC):
             default=str(
                 self.get_default(ctx) if self.get_default(ctx) is not None else ""
             ),
+            style=self.style,
         ).unsafe_ask()
