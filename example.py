@@ -70,7 +70,7 @@ def multiple(fruit: Sequence[str]):
 
 @cli.command()
 @confirm_option("--confirm", prompt="Do you really want to ?")
-def confirm_cmd(confirm: bool):
+def confirm(confirm: bool):
     """Handle a confirmation prompt."""
     print(confirm)
 
