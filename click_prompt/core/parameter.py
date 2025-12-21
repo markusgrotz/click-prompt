@@ -46,12 +46,33 @@ class PromptParameter(click.Parameter, ABC):
         self.style = style or None
         super().__init__(param_decls, **kwargs)
 
+    def _is_unset_value(self, value: Any) -> bool:
+        """
+        Checks if a value is unset.
+
+        In newer Click versions (>= 8.3.0), unset values may be represented by a
+        sentinel rather than None.
+        """
+        if value is None:
+            return True
+        unset_value = getattr(getattr(click, "_utils", None), "UNSET", None)
+        return value is unset_value
+     
+
+    def get_default_prompt_value(self, ctx: Context) -> Any:
+        """
+        Return the effective default value for prompts, or None if unset.
+        """
+        default_value = self.get_default(ctx)
+        if self._is_unset_value(default_value):
+            return None
+        return default_value
+    
     @abstractmethod
     def prompt_for_value(self, ctx: Context):
         """
         Prompt the user for a value using a questionary interface.
         """
-
 
 class ChoiceParameter(PromptParameter, ABC):
     """
@@ -79,7 +100,7 @@ class ChoiceParameter(PromptParameter, ABC):
         """
         Returns a list of choices and check if it is listed as default value
         """
-        default = self.get_default(ctx)
+        default = self.get_default_prompt_value(ctx)
         if default is None:
             default = []
         return [questionary.Choice(n, checked=n in default) for n in self.type.choices]
@@ -94,7 +115,7 @@ class ChoiceParameter(PromptParameter, ABC):
         return questionary.select(
             self.prompt,
             choices=self.type.choices,
-            default=self.get_default(ctx),
+            default=self.get_default_prompt_value(ctx),
             style=self.style,
         ).unsafe_ask()
 
@@ -114,8 +135,9 @@ class ConfirmParameter(PromptParameter, ABC):
         super().__init__(param_decls, prompt=prompt, is_flag=True, **kwargs)
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
+        default_value = bool(self.get_default_prompt_value(ctx))
         return questionary.confirm(
-            self.prompt, default=self.get_default(ctx) or False, style=self.style
+            self.prompt, default=default_value, style=self.style
         ).unsafe_ask()
 
 
@@ -133,8 +155,9 @@ class FilePathParameter(PromptParameter, ABC):
         super().__init__(param_decls, prompt=prompt, **kwargs)
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
+        default_path = self.get_default_prompt_value(ctx) or ""
         return questionary.path(
-            self.prompt, default=self.get_default(ctx) or "", style=self.style
+            self.prompt, default=default_path, style=self.style
         ).unsafe_ask()
 
 
@@ -159,10 +182,11 @@ class AutoCompleteParameter(PromptParameter, ABC):
             self.choices = choices or []
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
+        default_value = self.get_default_prompt_value(ctx) or ""
         return questionary.autocomplete(
             self.prompt,
             self.choices,
-            self.get_default(ctx) or "",
+            default_value,
             meta_information=self.meta_information,
             style=self.style,
         ).unsafe_ask()
@@ -182,10 +206,12 @@ class InputTextParameter(PromptParameter, ABC):
         super().__init__(param_decls, prompt=prompt, **kwargs)
 
     def prompt_for_value(self, ctx: click.core.Context) -> Any:
+        if self.get_default_prompt_value(ctx) is None:
+            default_value = ""
+        else:
+            default_value = str(self.get_default_prompt_value(ctx))
         return questionary.text(
             self.prompt,
-            default=str(
-                self.get_default(ctx) if self.get_default(ctx) is not None else ""
-            ),
+            default=default_value,
             style=self.style,
         ).unsafe_ask()

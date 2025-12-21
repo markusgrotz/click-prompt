@@ -46,7 +46,7 @@ class PromptArgument(click.Argument, PromptParameter, ABC):
         value = opts.get(self.name)  # type: ignore
         source = ParameterSource.COMMANDLINE
 
-        if value is None:
+        if self._is_unset_value(value):
             value = self.prompt_for_value(ctx)
             source = ParameterSource.PROMPT
 
