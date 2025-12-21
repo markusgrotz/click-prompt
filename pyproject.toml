@@ -30,7 +30,7 @@ documentation = "https://github.com/markusgrotz/click-prompt"
 tracker = "https://github.com/markusgrotz/click-prompt/issues"
 
 [project.optional-dependencies]
-dev = ["pytest", "toml", "myst-parser", "sphinx-rtd-theme", "sphinxcontrib-video", "black", "ruff"]
+dev = ["pytest", "toml", "myst-parser", "sphinx-rtd-theme", "ruff"]
 
 [build-system]
 requires = ["uv_build>=0.9.4,<0.10.0"]
@@ -39,7 +39,3 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-name = "click_prompt"
 module-root = ""
-
-[tool.black]
-line-length = 88
-include = '\.pyi?$'
