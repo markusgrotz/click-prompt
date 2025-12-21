@@ -3,7 +3,7 @@ name = "click-prompt"
 version = "0.6.5"
 description = "click-prompt provides more beautiful interactive options for the Python click library"
 readme = "README.md"
-requires-python = ">=3.6.9"
+requires-python = ">=3.9"
 license = {file = "LICENSE.md"}
 keywords = ["cli"]
 authors = [
@@ -43,5 +43,3 @@ module-root = ""
 [tool.black]
 line-length = 88
 include = '\.pyi?$'
-
-
