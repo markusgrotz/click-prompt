@@ -13,29 +13,29 @@ from click_prompt.core.parameter import InputTextParameter
 
 class ChoiceOption(ChoiceParameter, click.Option):
     """
-    Option decorator for :class:`~click_prompt.core.parameter.ChoiceArgument`
+    Option class for :class:`~click_prompt.core.parameter.ChoiceParameter`
     """
 
 
 class ConfirmOption(ConfirmParameter, click.Option):
     """
-    Option decorator for :class:`~click_prompt.core.parameter.ConfirmParameter`
+    Option class for :class:`~click_prompt.core.parameter.ConfirmParameter`
     """
 
-
+    
 class FilePathOption(FilePathParameter, click.Option):
     """
-    Option decorator for :class:`~click_prompt.core.parameter.PromptArgument`
+    Option class for :class:`~click_prompt.core.parameter.FilePathParameter`
     """
 
 
 class AutoCompleteOption(AutoCompleteParameter, click.Option):
     """
-    Option decorator for :class:`~click_prompt.core.parameter.AutoCompleteParameter`
+    Option class for :class:`~click_prompt.core.parameter.AutoCompleteParameter`
     """
 
 
 class InputTextOption(InputTextParameter, click.Option):
     """
-    Option decorator for :class:`~click_prompt.core.parameter.InputTextParameter`
+    Option class for :class:`~click_prompt.core.parameter.InputTextParameter`
     """
