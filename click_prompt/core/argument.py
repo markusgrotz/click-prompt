@@ -15,6 +15,8 @@ import click
 from click.core import ParameterSource
 from click.core import Context
 
+import questionary
+
 from click_prompt.core.parameter import PromptParameter
 from click_prompt.core.parameter import ChoiceParameter
 from click_prompt.core.parameter import ConfirmParameter
@@ -33,9 +35,12 @@ class PromptArgument(click.Argument, PromptParameter, ABC):
         param_decls: Optional[Sequence[str]] = None,
         prompt: Union[bool, str] = True,
         multiple: bool = False,
+        style: Optional[questionary.Style] = None,
         **kwargs
     ):
+        kwargs.pop("is_flag", None)
         super().__init__(param_decls, **kwargs)
+        self.style = style
         self.prompt = prompt
         self.multiple = multiple
 
