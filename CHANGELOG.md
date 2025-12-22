@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## [upcoming] -
 
+- Add support for Python 3.14
 
 ## [0.7.0] - 2025-12-22
 
