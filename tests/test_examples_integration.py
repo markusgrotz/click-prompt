@@ -14,7 +14,7 @@ class TestExample(unittest.TestCase):
     """
     Run examples
 
-    prompt_toolkit behaves very differently when it is not connected to a real TTY.
+    prompt_toolkit behaves differently when not connected to a real TTY.
     """
 
     def test_example_single_cmd(self):
@@ -78,6 +78,32 @@ class TestExample(unittest.TestCase):
         self.assertEqual(result.returncode, 0)
         actual_output = result.stdout.splitlines()[-1]
         self.assertEqual("False", actual_output)
+
+    def test_example_argument(self):
+        result = subprocess.run(
+            [sys.executable, EXAMPLE_FILE, "argument"],
+            input=f"{CURSOR_DOWN}\n",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding="utf-8",
+        )
+        self.assertEqual(result.returncode, 0)
+        expected_output = "Bananas"
+        actual_output = result.stdout.splitlines()[-1]
+        self.assertEqual(expected_output, actual_output)
+
+    def test_example_text_arg_prompt(self):
+        result = subprocess.run(
+            [sys.executable, EXAMPLE_FILE, "text-arg"],
+            input="Test\n3\n",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding="utf-8",
+        )
+        self.assertEqual(result.returncode, 0)
+        expected_output = "Fruit: Test | Quantity: 3"
+        actual_output = result.stdout.splitlines()[-1]
+        self.assertEqual(expected_output, actual_output)
 
     def test_file_path_prompt(self):
         result = subprocess.run(
