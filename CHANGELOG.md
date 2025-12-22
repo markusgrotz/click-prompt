@@ -5,8 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ## [upcoming] -
 
-- Increase minimum required python version to Python 3.9
-- Migrate from poetry to PEP 621 project metadata ([#](https://github.com/markusgrotz/click-prompt/pull/16))
+
+## [0.7.0] - 2025-12-22
+
+- Revise parameter logic and update docstrings ([#18](https://github.com/markusgrotz/click-prompt/pull/18))
+- Add integration tests for examples ([#17](https://github.com/markusgrotz/click-prompt/pull/17))
+- Increase minimum required python version to Python 3.9 ([#16](https://github.com/markusgrotz/click-prompt/pull/16))
+- Migrate from poetry to PEP 621 project metadata ([#16](https://github.com/markusgrotz/click-prompt/pull/16))
 - Run github workflow only on tag pushes ([#14](https://github.com/markusgrotz/click-prompt/pull/14)) 
 - Add parameter for different styled prompts ([#13](https://github.com/markusgrotz/click-prompt/pull/13)) (Ankur Grover)
 
@@ -38,7 +43,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added support to accept default values
 
-[upcoming]: https://github.com/markusgrotz/click-prompt/compare/v0.6.5...HEAD
+[upcoming]: https://github.com/markusgrotz/click-prompt/compare/v0.7.0...HEAD
+[0.7.0] https://github.com/markusgrotz/click-prompt/compare/v0.6.5...v0.7.0
 [0.6.5]: https://github.com/markusgrotz/click-prompt/compare/v0.6.4...v0.6.5
 [0.6.4]: https://github.com/markusgrotz/click-prompt/compare/v0.6.3...v0.6.4
 [0.6.3]: https://github.com/markusgrotz/click-prompt/compare/v0.6.2...v0.6.3
