@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## [upcoming] -
 
+- Increase minimum required python version to Python 3.9
+- Migrate from poetry to PEP 621 project metadata ([#](https://github.com/markusgrotz/click-prompt/pull/16))
 - Run github workflow only on tag pushes ([#14](https://github.com/markusgrotz/click-prompt/pull/14)) 
 - Add parameter for different styled prompts ([#13](https://github.com/markusgrotz/click-prompt/pull/13)) (Ankur Grover)
 

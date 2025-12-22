@@ -4,7 +4,7 @@
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/click-prompt)](https://pypi.org/project/click-prompt/) 
 [![PyPI version](https://img.shields.io/pypi/v/click-prompt)](https://pypi.org/project/click-prompt/) 
 [![License](https://img.shields.io/pypi/l/click-prompt)](https://github.com/markusgrotz/click-prompt/blob/main/LICENSE.md)
-[![Code style](https://img.shields.io/badge/code%20style-black-black)](https://black.readthedocs.io/en/stable/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Downloads/Month](https://pepy.tech/badge/click-prompt/month)](https://pepy.tech/project/click-prompt)
 
 

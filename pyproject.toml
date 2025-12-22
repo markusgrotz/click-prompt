@@ -1,37 +1,41 @@
-[tool.poetry]
+[project]
 name = "click-prompt"
 version = "0.6.5"
 description = "click-prompt provides more beautiful interactive options for the Python click library"
 readme = "README.md"
-authors = ["Markus Grotz <grotz@uw.edu>"]
-license = "MIT"
+requires-python = ">=3.9"
+license = {file = "LICENSE.md"}
+keywords = ["cli"]
+authors = [
+  { name = "Markus Grotz", email = "grotz@uw.edu" }
+]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Environment :: Console",
 ]
 
-[tool.poetry.urls]
+dependencies = [
+    "click>=8.0.4",
+    "questionary>=1.10.0"
+]
+
+
+[project.urls]
 homepage = "https://github.com/markusgrotz/click-prompt"
 repository = "https://github.com/markusgrotz/click-prompt"
 documentation = "https://github.com/markusgrotz/click-prompt"
 tracker = "https://github.com/markusgrotz/click-prompt/issues"
 
-[tool.poetry.dependencies]
-python = ">=3.6.9,<4.0"
-click = ">=8.0.4"
-questionary = "^1.10.0"
-
-[tool.poetry.dev-dependencies]
-pytest = "^7.0"
-pylint = "^3.0"
-mypy = "^1.0"
-black = "^24.0"
-
-[tool.black]
-line-length = 88
-include = '\.pyi?$'
+[project.optional-dependencies]
+dev = ["pytest", "toml", "myst-parser", "sphinx-rtd-theme", "ruff"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.9.4,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "click_prompt"
+module-root = ""
