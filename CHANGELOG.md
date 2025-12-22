@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## [upcoming] -
 
-- Add support for Python 3.14
+## [0.7.1] - 2025-12-22
+
+- Add support for Python 3.14 (no functional change)
 
 ## [0.7.0] - 2025-12-22
 
@@ -44,7 +46,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added support to accept default values
 
-[upcoming]: https://github.com/markusgrotz/click-prompt/compare/v0.7.0...HEAD
+[upcoming]: https://github.com/markusgrotz/click-prompt/compare/v0.7.1...HEAD
+[0.7.1] https://github.com/markusgrotz/click-prompt/compare/v0.7.0...v0.7.1
 [0.7.0] https://github.com/markusgrotz/click-prompt/compare/v0.6.5...v0.7.0
 [0.6.5]: https://github.com/markusgrotz/click-prompt/compare/v0.6.4...v0.6.5
 [0.6.4]: https://github.com/markusgrotz/click-prompt/compare/v0.6.3...v0.6.4
