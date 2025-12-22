@@ -1,5 +1,5 @@
 """
-Contains the argument implementations
+Contains the argument implementations.
 """
 
 from typing import Optional
@@ -15,6 +15,8 @@ import click
 from click.core import ParameterSource
 from click.core import Context
 
+import questionary
+
 from click_prompt.core.parameter import PromptParameter
 from click_prompt.core.parameter import ChoiceParameter
 from click_prompt.core.parameter import ConfirmParameter
@@ -25,7 +27,7 @@ from click_prompt.core.parameter import InputTextParameter
 
 class PromptArgument(click.Argument, PromptParameter, ABC):
     """
-    General class
+    Base class for prompt-enabled arguments.
     """
 
     def __init__(
@@ -33,9 +35,12 @@ class PromptArgument(click.Argument, PromptParameter, ABC):
         param_decls: Optional[Sequence[str]] = None,
         prompt: Union[bool, str] = True,
         multiple: bool = False,
+        style: Optional[questionary.Style] = None,
         **kwargs
     ):
+        kwargs.pop("is_flag", None)
         super().__init__(param_decls, **kwargs)
+        self.style = style
         self.prompt = prompt
         self.multiple = multiple
 
@@ -46,7 +51,7 @@ class PromptArgument(click.Argument, PromptParameter, ABC):
         value = opts.get(self.name)  # type: ignore
         source = ParameterSource.COMMANDLINE
 
-        if value is None:
+        if self._is_unset_value(value):
             value = self.prompt_for_value(ctx)
             source = ParameterSource.PROMPT
 
@@ -55,29 +60,29 @@ class PromptArgument(click.Argument, PromptParameter, ABC):
 
 class ChoiceArgument(ChoiceParameter, PromptArgument):
     """
-    Argument decorator for :class:`~click_prompt.core.parameter.ChoiceArgument`
+    Argument class for :class:`~click_prompt.core.parameter.ChoiceParameter`
     """
 
 
 class ConfirmArgument(ConfirmParameter, PromptArgument):
     """
-    Argument decorator for :class:`~click_prompt.core.parameter.ConfirmParameter`
+    Argument class for :class:`~click_prompt.core.parameter.ConfirmParameter`
     """
 
 
 class FilePathArgument(FilePathParameter, PromptArgument):
     """
-    Argument decorator for :class:`~click_prompt.core.parameter.PromptArgument`
+    Argument class for :class:`~click_prompt.core.parameter.FilePathParameter`
     """
 
 
 class AutoCompleteArgument(AutoCompleteParameter, PromptArgument):
     """
-    Argument decorator for :class:`~click_prompt.core.parameter.AutoCompleteParameter`
+    Argument class for :class:`~click_prompt.core.parameter.AutoCompleteParameter`
     """
 
 
 class InputTextArgument(InputTextParameter, PromptArgument):
     """
-    Argument decorator for :class:`~click_prompt.core.parameter.AInputTextParameter`
+    Argument class for :class:`~click_prompt.core.parameter.InputTextParameter`
     """
